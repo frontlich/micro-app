@@ -814,7 +814,7 @@ export default class CreateApp implements AppInterface {
   }
 
   public querySelectorAll (selectors: string): NodeListOf<Node> {
-    return this.container ? globalEnv.rawElementQuerySelectorAll.call(this.container, selectors) : []
+    return this.container ? globalEnv.rawElementQuerySelectorAll.call(this.container, selectors) : globalEnv.rawDocument.createDocumentFragment().querySelectorAll(selectors)
   }
 
   /**

@@ -1,5 +1,5 @@
 {
-  "name": "@micro-zoe/micro-app",
+  "name": "@jdsw/micro-app",
   "version": "1.0.0-rc.26",
   "description": "A lightweight, efficient and powerful micro front-end framework",
   "private": false,
