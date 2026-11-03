@@ -65,7 +65,7 @@ describe('extractScriptElement nomodule', () => {
     const script = createScript({
       nomodule: '',
       id: 'vite-legacy-entry',
-      'data-src': './assets/index-legacy.js',
+      'data-src': '/assets/index-legacy.js',
     })
     script.textContent = "System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))"
     Object.defineProperty(script, 'noModule', { value: true, configurable: true })
@@ -75,9 +75,25 @@ describe('extractScriptElement nomodule', () => {
 
     expect(result).toBe(script)
     expect(script.getAttribute('id')).toBe('vite-legacy-entry')
-    expect(script.getAttribute('data-src')).toBe('./assets/index-legacy.js')
+    expect(script.getAttribute('data-src')).toBe('http://child.com/assets/index-legacy.js')
     expect(script.textContent).toContain('System.import')
     expect(app.source.scripts.size).toBe(0)
+  })
+
+  test('complete relative data-src of nomodule script', () => {
+    const app = createApp()
+    const parent = document.createElement('div')
+    const script = createScript({
+      nomodule: '',
+      id: 'vite-legacy-entry',
+      'data-src': './assets/index-legacy.js',
+    })
+    Object.defineProperty(script, 'noModule', { value: true, configurable: true })
+    parent.appendChild(script)
+
+    extractScriptElement(script, parent, app)
+
+    expect(script.getAttribute('data-src')).toBe('http://child.com/sub/assets/index-legacy.js')
   })
 
   test('keep dynamic nomodule script as an inert node', () => {

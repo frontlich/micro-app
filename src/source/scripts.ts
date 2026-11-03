@@ -179,9 +179,14 @@ export function extractScriptElement (
      * 1. The node may live in the base document (with sandbox), where the child
      *    app's base element does not apply, so src must be completed to an
      *    absolute url, otherwise it will be resolved by the base document base.
-     * 2. Do not add it to app.source.scripts, it should not be fetched or run.
+     * 2. data-src is a url too (used by the legacy entry of @vitejs/plugin-legacy),
+     *    it will be passed to System.import by the runtime fallback, so it must be
+     *    completed as well, otherwise it will be requested from the base app origin.
+     * 3. Do not add it to app.source.scripts, it should not be fetched or run.
      */
     if (src) globalEnv.rawSetAttribute.call(script, 'src', src)
+    const dataSrc = script.getAttribute('data-src')
+    if (dataSrc) globalEnv.rawSetAttribute.call(script, 'data-src', CompletionPath(dataSrc, app.url))
     return isDynamic ? { replaceComment: null } : script
   } else if (!globalEnv.supportModuleScript && script.type === 'module') {
     replaceComment = document.createComment('module script ignored by micro-app')
