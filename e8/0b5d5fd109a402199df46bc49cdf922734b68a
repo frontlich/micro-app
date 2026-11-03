@@ -1,0 +1,16 @@
+docs/zh-cn/changelog.md
+  h_a864c8c047e7d0 10-14
+package.json
+  h_a864c8c047e7d0 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "e80b5d5fd109a402199df46bc49cdf922734b68a",
+  "prompts": {},
+  "humans": {
+    "h_a864c8c047e7d0": {
+      "author": "frontlich <lichen154@jd.com>"
+    }
+  }
+}
