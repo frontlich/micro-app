@@ -170,11 +170,21 @@ export function extractScriptElement (
       delete globalEnv.rawDocument.currentScript
     }
     return null
-  } else if (
-    (globalEnv.supportModuleScript && script.noModule) ||
-    (!globalEnv.supportModuleScript && script.type === 'module')
-  ) {
-    replaceComment = document.createComment(`${script.noModule ? 'noModule' : 'module'} script ignored by micro-app`)
+  } else if (globalEnv.supportModuleScript && script.noModule) {
+    /**
+     * Keep the nomodule script as an inert node.
+     * Browsers that support module scripts will not execute it, but runtime
+     * fallbacks (e.g. @vitejs/plugin-legacy) may read its src / data-src.
+     * NOTE:
+     * 1. The node may live in the base document (with sandbox), where the child
+     *    app's base element does not apply, so src must be completed to an
+     *    absolute url, otherwise it will be resolved by the base document base.
+     * 2. Do not add it to app.source.scripts, it should not be fetched or run.
+     */
+    if (src) globalEnv.rawSetAttribute.call(script, 'src', src)
+    return isDynamic ? { replaceComment: null } : script
+  } else if (!globalEnv.supportModuleScript && script.type === 'module') {
+    replaceComment = document.createComment('module script ignored by micro-app')
   } else if (src) { // remote script
     let scriptInfo = sourceCenter.script.getInfo(src)
     const appSpaceData = {

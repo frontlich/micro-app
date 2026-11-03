@@ -135,6 +135,9 @@ function handleNewNode(child: Node, app: AppInterface): Node {
     } else if (replaceComment) {
       dynamicElementInMicroAppMap.set(child, replaceComment)
       return replaceComment
+    } else if (globalEnv.supportModuleScript && child.noModule) {
+      // nomodule script is kept as an inert node, record it to avoid re-processing
+      dynamicElementInMicroAppMap.set(child, child)
     }
 
     return child
