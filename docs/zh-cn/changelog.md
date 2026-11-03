@@ -7,6 +7,11 @@
 - 修订版本号：每周末会进行日常 bugfix 更新。（如果有紧急的 bugfix，则任何时候都可发布）
 
 ---
+### 1.0.0-rc.28
+
+`2026-11-03`
+- **Bug Fix**
+  - 🐞 修复 `nomodule` 脚本的 `data-src` 未补全为绝对路径，导致 `@vitejs/plugin-legacy` 的 legacy entry 从基座域名加载资源（`disable-patch-request` 下 iframe 沙箱不注入 `<base>`）。
 ### 1.0.0-rc.27
 
 `2026-11-03`
