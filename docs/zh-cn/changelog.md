@@ -7,6 +7,11 @@
 - 修订版本号：每周末会进行日常 bugfix 更新。（如果有紧急的 bugfix，则任何时候都可发布）
 
 ---
+### 1.0.0-rc.27
+
+`2026-11-03`
+- **Bug Fix**
+  - 🐞 修复 iframe 沙箱下 `@vitejs/plugin-legacy` 产物白屏：保留 `nomodule` 脚本为惰性节点，供运行时兜底读取 `#vite-legacy-polyfill` / `#vite-legacy-entry`。
 ### 1.0.0-rc.26
 
 `2025-05-25`
