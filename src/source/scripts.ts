@@ -529,6 +529,7 @@ export function runScript (
         scriptElement,
         appSpaceData.attrs,
         callback,
+        !replaceElement,
       )
 
       /**
@@ -639,9 +640,21 @@ function runCode2InlineScript (
   scriptElement: HTMLScriptElement,
   attrs: AttrsType,
   callback?: moduleCallBack,
+  isStatic = false,
 ): void {
   if (module) {
     globalEnv.rawSetAttribute.call(scriptElement, 'type', 'module')
+    /**
+     * Scripts created by document.createElement are async by default, so the
+     * execution order guaranteed by the html parser is lost.
+     * e.g. @vitejs/plugin-legacy injects a modern-detection module script and a
+     * legacy fallback module script which depends on it. Without order the
+     * fallback runs first and legacy chunks are loaded in modern browsers.
+     * NOTE: keep async when the origin script declares it.
+     */
+    if (isStatic && !attrs.has('async')) {
+      scriptElement.async = false
+    }
     if (isInlineScript(address)) {
       /**
        * inline module script cannot convert to blob mode
