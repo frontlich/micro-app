@@ -1,0 +1,20 @@
+docs/zh-cn/changelog.md
+  h_a864c8c047e7d0 10-14
+package.json
+  h_a864c8c047e7d0 3
+src/__tests__/unit/source/scripts.test.ts
+  h_a864c8c047e7d0 6,146-251
+src/source/scripts.ts
+  h_a864c8c047e7d0 532,643,647-657
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "3fbc2a3c7f37cbd372c8d982631eff174d075e4c",
+  "prompts": {},
+  "humans": {
+    "h_a864c8c047e7d0": {
+      "author": "frontlich <lichen154@jd.com>"
+    }
+  }
+}
